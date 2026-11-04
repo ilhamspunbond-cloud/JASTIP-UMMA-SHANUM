@@ -3,67 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jastip Umma Shanum</title>
-    <!-- Pemanggilan File CSS (Cukup 1 kali di sini) -->
-    <link rel="stylesheet" href="animasi_pembuka.css">
+    <title>Panel Admin - Jastip Umma Shanum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .admin-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 { color: #ff6b81; margin-bottom: 10px; text-align: center; }
+        p { font-size: 14px; color: #666; text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; }
+        input[type="password"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .btn {
+            width: 100%;
+            padding: 11px;
+            background-color: #ff6b81;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover { background-color: #ff4757; }
+        .hidden { display: none; }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; font-size: 13px; }
+        .back-link:hover { color: #333; }
+    </style>
 </head>
 <body>
 
-    <!-- Bagian Splash Screen & Video -->
-    <div id="splash-screen" class="splash-screen">
-        
-        <!-- Video Sambutan -->
-        <video id="intro-video" autoplay muted playsinline>
-            <!-- Sumber video akan otomatis diisi dari pengaturan Admin jika sudah diubah -->
-            <source id="video-source" src="jastip_intro.mp4.mp4" type="video/mp4">
-            Browser tidak mendukung pemutaran video.
-        </video>
-
-        <!-- Tombol Interaktif (Muncul khusus untuk pengguna pertama) -->
-        <div id="auth-buttons" class="auth-container" style="display: none;">
-            <h2>Selamat Datang di Jastip Umma Shanum</h2>
-            <a href="register.html" class="btn btn-primary">Lanjutkan (Daftar Akun)</a>
-            <a href="login.html" class="btn btn-secondary">Sudah Punya Akun (Masuk)</a>
+    <div class="admin-card">
+        <!-- PINTU 1: LOGIN ADMIN UTAMA -->
+        <div id="login-section">
+            <h2>🔐 Pintu 1: Admin Utama</h2>
+            <p>Masukkan Sandi Sakti untuk masuk ke Panel Kontrol.</p>
+            <div class="form-group">
+                <label>Sandi Sakti:</label>
+                <input type="password" id="admin-pass" placeholder="Masukkan sandi...">
+            </div>
+            <button onclick="cekSandiAdmin()" class="btn">Masuk Admin</button>
+            <a href="index.html" class="back-link">← Kembali ke Beranda</a>
         </div>
 
-        <!-- Tombol Roda Gigi (Pintu Rahasia Menuju admin.html) - Posisi yang benar di dalam body -->
-        <a href="admin.html" class="secret-gear-btn" title="Admin Panel">⚙️</a>
+        <!-- DASHBOARD ADMIN (SETELAH LOGIN BERHASIL) -->
+        <div id="dashboard-section" class="hidden">
+            <h2>⚙️ Dashboard Admin</h2>
+            <p>Kontrol Utama Platform Jastip Umma Shanum.</p>
+            
+            <div class="form-group">
+                <label>Ubah URL Video Sambutan (Splash Screen):</label>
+                <input type="text" id="video-url-input" placeholder="https://... (.mp4)">
+            </div>
+            <button onclick="simpanVideo()" class="btn">Simpan Video Baru</button>
+
+            <a href="index.html" class="back-link" onclick="logoutAdmin()">← Keluar / Kembali</a>
+        </div>
     </div>
 
-    <!-- Script JavaScript untuk Cek Video Admin & Alur Pengguna -->
     <script>
-        // 1. CEK APAKAH ADMIN SUDAH MENGUBAH VIDEO LEWAT DASHBOARD ADMIN
-        const customVideoUrl = localStorage.getItem('jastip_custom_video');
-        if (customVideoUrl) {
-            const videoSource = document.getElementById('video-source');
-            const videoElement = document.getElementById('intro-video');
-            videoSource.src = customVideoUrl;
-            videoElement.load(); // Muat ulang video dengan link baru dari admin
-        }
-
-        // 2. LOGIKA UTAMA: PENGGUNA PERTAMA VS PENGGUNA LAMA
-        const video = document.getElementById('intro-video');
-        const authButtons = document.getElementById('auth-buttons');
-        const sudahPernahBuka = localStorage.getItem('jastip_sudah_buka');
-
-        video.onended = function() {
-            if (!sudahPernahBuka) {
-                localStorage.setItem('jastip_sudah_buka', 'true');
-                authButtons.style.display = 'flex'; 
-            } else {
-                window.location.href = 'dashboard.html'; 
+        window.onload = function() {
+            if (localStorage.getItem('jastip_admin_logged') === 'true') {
+                tampilkanDashboard();
             }
         };
 
-        // Jaga-jaga jika autoplay diblokir browser
-        video.addEventListener('error', function() {
-            if (!sudahPernahBuka) {
-                localStorage.setItem('jastip_sudah_buka', 'true');
-                authButtons.style.display = 'flex';
+        function cekSandiAdmin() {
+            const inputSandi = document.getElementById('admin-pass').value;
+            // Sandi Sakti Admin Utama
+            if (inputSandi === 'ROJAK121$') {
+                localStorage.setItem('jastip_admin_logged', 'true');
+                tampilkanDashboard();
             } else {
-                window.location.href = 'dashboard.html';
+                alert('Sandi Sakti salah, Bro! Akses Admin ditolak.');
             }
-        });
+        }
+
+        function tampilkanDashboard() {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            
+            const savedVideo = localStorage.getItem('jastip_custom_video');
+            if (savedVideo) {
+                document.getElementById('video-url-input').value = savedVideo;
+            }
+        }
+
+        function simpanVideo() {
+            const urlBaru = document.getElementById('video-url-input').value;
+            if (urlBaru) {
+                localStorage.setItem('jastip_custom_video', urlBaru);
+                alert('Berhasil, Bro! Video sambutan berhasil diperbarui.');
+            } else {
+                alert('Tolong masukkan URL video yang valid.');
+            }
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem('jastip_admin_logged');
+        }
     </script>
 </body>
 </html>
