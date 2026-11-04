@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Akun - Jastip Umma Shanum</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .register-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 100%; max-width: 450px; box-sizing: border-box; }
+        h2 { color: #ff6b81; margin-bottom: 5px; text-align: center; }
+        .subtitle { font-size: 12px; color: #666; text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-weight: bold; margin-bottom: 4px; font-size: 12px; color: #333; }
+        input[type="text"], input[type="date"], input[type="tel"], select, textarea { width: 100%; padding: 9px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 13px; }
+        textarea { resize: vertical; height: 60px; }
+        .checkbox-group { display: flex; align-items: flex-start; gap: 8px; margin: 15px 0; font-size: 12px; color: #555; }
+        .checkbox-group input { margin-top: 2px; }
+        .btn { width: 100%; padding: 11px; background-color: #ff6b81; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn:hover { background-color: #ff4757; }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; font-size: 12px; }
+        .back-link:hover { color: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="register-card">
+        <h2>📝 Pendaftaran Akun Baru</h2>
+        <div class="subtitle">Jastip Umma Shanum (NIB OSS: 0311260134277)</div>
+
+        <div class="form-group">
+            <label>Nama Lengkap:</label>
+            <input type="text" id="reg-nama" placeholder="Masukkan nama lengkap...">
+        </div>
+
+        <div class="form-group">
+            <label>Tanggal Lahir (Minimal 17 Tahun):</label>
+            <input type="date" id="reg-tgl">
+        </div>
+
+        <div class="form-group">
+            <label>Nomor WhatsApp Aktif:</label>
+            <input type="tel" id="reg-wa" placeholder="Contoh: 081234567890">
+        </div>
+
+        <div class="form-group">
+            <label>Pilihan Peran:</label>
+            <select id="reg-role">
+                <option value="pembeli">Pembeli / Customer (Nuansa Pink)</option>
+                <option value="penjual">Penjual / Mitra UMKM</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Kode Referral / Kode Sales (Opsional):</label>
+            <input type="text" id="reg-kode" placeholder="Masukkan kode jika ada...">
+        </div>
+
+        <div class="form-group">
+            <label>Alamat Lengkap:</label>
+            <textarea id="reg-alamat" placeholder="Masukkan alamat pengiriman/toko..."></textarea>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="reg-terms" required>
+            <label for="reg-terms" style="font-weight: normal; margin-bottom: 0;">Saya menyetujui Syarat & Ketentuan serta Kebijakan Privasi platform Jastip Umma Shanum.</label>
+        </div>
+
+        <button onclick="prosesRegistrasi()" class="btn">Daftar Sekarang</button>
+
+        <a href="index.html" class="back-link">← Kembali ke Beranda Utama</a>
+    </div>
+
+    <script>
+        function prosesRegistrasi() {
+            const nama = document.getElementById('reg-nama').value.trim();
+            const tglLahir = document.getElementById('reg-tgl').value;
+            const wa = document.getElementById('reg-wa').value.trim();
+            const role = document.getElementById('reg-role').value;
+            const terms = document.getElementById('reg-terms').checked;
+
+            if (!nama || !tglLahir || !wa) {
+                alert('Tolong lengkapi data diri lu, Bro!');
+                return;
+            }
+
+            if (!terms) {
+                alert('Lu harus mencentang Syarat & Ketentuan terlebih dahulu.');
+                return;
+            }
+
+            // Validasi Usia Minimal 17 Tahun
+            const tahunLahir = new Date(tglLahir).getFullYear();
+            const tahunSekarang = new Date().getFullYear();
+            const usia = tahunSekarang - tahunLahir;
+
+            if (usia < 17) {
+                alert('Maaf, usia minimal untuk mendaftar adalah 17 tahun, Bro!');
+                return;
+            }
+
+            // Simpan data ke LocalStorage
+            localStorage.setItem('jastip_user_nama', nama);
+            localStorage.setItem('jastip_user_role', role);
+            localStorage.setItem('jastip_sudah_buka', 'true');
+
+            alert('Registrasi Berhasil! Selamat datang di Jastip Umma Shanum.');
+
+            // Arahkan ke dashboard masing-masing berdasarkan peran
+            if (role === 'penjual') {
+                window.location.href = 'dashboard-penjual.html';
+            } else {
+                window.location.href = 'dashboard-pembeli.html';
+            }
+        }
+    </script>
+</body>
+</html>
