@@ -1,83 +1,43 @@
-/* Pengaturan Dasar Halaman */
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: #000;
-}
 
-/* Container Splash Screen */
-.splash-screen {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Pengaturan Tampilan Video Agar Pas di Layar HP/Monitor */
-.splash-screen video {
+/* Teks Visi & Legalitas di Bawah Video */
+.brand-info {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Menyesuaikan layar tanpa gepeng */
-    z-index: 1;
-}
-
-/* Styling Kotak Tombol di Atas Video */
-.auth-container {
-    position: absolute;
+    bottom: 20px;
     z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    text-align: center;
-    width: 80%;
-    max-width: 350px;
-}
-
-.auth-container h2 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.btn {
-    width: 100%;
-    padding: 12px;
-    border-radius: 25px;
-    font-weight: bold;
-    text-decoration: none;
-    text-align: center;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-.btn-primary {
-    background-color: #ff6b81; /* Nuansa pink Jastip Umma Shanum */
     color: white;
+    text-align: center;
+    padding: 0 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    pointer-events: none; /* Biar tidak sengaja ke-klik */
 }
 
-.btn-primary:hover {
-    background-color: #ff4757;
+.brand-info p {
+    font-size: 13px;
+    margin: 0 0 5px 0;
+    font-weight: 500;
 }
 
-.btn-secondary {
-    background-color: transparent;
-    color: #ff6b81;
-    border: 2px solid #ff6b81;
+.brand-info small {
+    font-size: 10px;
+    opacity: 0.9;
 }
 
-.btn-secondary:hover {
-    background-color: #fff0f3;
+/* Tombol Roda Gigi Rahasia di Pojok Bawah */
+.secret-gear-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    z-index: 3;
+    font-size: 22px;
+    text-decoration: none;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px;
+    border-radius: 50%;
+    transition: 0.3s;
+    opacity: 0.6; /* Dibuat agak transparan agar tersembunyi */
+}
+
+.secret-gear-btn:hover {
+    opacity: 1;
+    transform: rotate(90deg); /* Efek putar dikit pas disentuh */
 }
