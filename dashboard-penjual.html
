@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Penjual - Jastip Umma Shanum</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; color: #333; }
+        .header { background: #2f3542; color: white; padding: 20px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header h1 { margin: 0; font-size: 20px; color: #2ed573; }
+        .header p { margin: 5px 0 0 0; font-size: 13px; opacity: 0.8; }
+        
+        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; }
+        
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .card h3 { margin-top: 0; color: #2f3542; font-size: 16px; border-bottom: 2px solid #f1f2f6; padding-bottom: 8px; }
+        
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-weight: bold; margin-bottom: 4px; font-size: 12px; color: #555; }
+        input[type="text"], input[type="number"], textarea { width: 100%; padding: 9px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 13px; }
+        textarea { resize: vertical; height: 60px; }
+        
+        .btn { padding: 10px 15px; background-color: #2ed573; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 13px; width: 100%; }
+        .btn:hover { background-color: #26af5f; }
+        
+        .info-box { background: #e8f8f0; border-left: 4px solid #2ed573; padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; color: #218c53; }
+        
+        .logout-link { display: block; text-align: center; margin-top: 30px; color: #888; text-decoration: none; font-size: 13px; }
+        .logout-link:hover { color: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🏪 Mitra UMKM Jastip Umma Shanum</h1>
+        <p>Pusat Manajemen Produk & Penjualan Toko</p>
+    </div>
+
+    <div class="container">
+        <!-- Informasi Hak Penjual -->
+        <div class="info-box">
+            💡 <b>Informasi Toko:</b> Anda menerima <b>100% penuh</b> dari harga produk Anda tanpa potongan komisi platform.
+        </div>
+
+        <!-- Tambah Produk Baru -->
+        <div class="card">
+            <h3>📦 Tambah Produk Jastip Baru</h3>
+            <div class="form-group">
+                <label>Nama Produk:</label>
+                <input type="text" id="prod-nama" placeholder="Contoh: Kripik Singkong Balado">
+            </div>
+            <div class="form-group">
+                <label>Harga Jual (Rp):</label>
+                <input type="number" id="prod-harga" placeholder="Contoh: 15000">
+            </div>
+            <div class="form-group">
+                <label>Deskripsi Singkat:</label>
+                <textarea id="prod-desc" placeholder="Jelaskan produk Anda secara menarik..."></textarea>
+            </div>
+            <button onclick="tambahProduk()" class="btn">Simpan & Tayangkan Produk</button>
+        </div>
+
+        <!-- Rekapitulasi Penghasilan -->
+        <div class="card">
+            <h3>💰 Rekapitulasi Keuangan Toko</h3>
+            <p style="font-size: 13px; color: #666; margin-bottom: 10px;">Total Penjualan Bulan Ini:</p>
+            <h2 style="color: #2ed573; margin: 0 0 15px 0;">Rp 0</h2>
+            <button onclick="alert('Permintaan pencairan dana toko berhasil diajukan!')" class="btn" style="background-color: #ffa502;">Tarik Dana Penjualan</button>
+        </div>
+
+        <!-- Tombol Keluar -->
+        <a href="index.html" class="logout-link" onclick="localStorage.clear()">← Keluar dari Akun Toko</a>
+    </div>
+
+    <script>
+        function tambahProduk() {
+            const nama = document.getElementById('prod-nama').value.trim();
+            const harga = document.getElementById('prod-harga').value.trim();
+
+            if (!nama || !harga) {
+                alert('Tolong isi nama produk dan harganya, Bro!');
+                return;
+            }
+
+            alert('Berhasil! Produk "' + nama + '" telah ditambahkan ke etalase toko.');
+            document.getElementById('prod-nama').value = '';
+            document.getElementById('prod-harga').value = '';
+            document.getElementById('prod-desc').value = '';
+        }
+    </script>
+</body>
+</html>
