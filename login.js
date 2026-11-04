@@ -1,5 +1,5 @@
- <!-- Script JavaScript untuk Logika Pengguna Pertama / Lama -->
-    <script>
+// Script JavaScript untuk Logika Pengguna Pertama / Lama 
+    
         const video = document.getElementById('intro-video');
         const splashScreen = document.getElementById('splash-screen');
         const authButtons = document.getElementById('auth-buttons');
@@ -17,6 +17,4 @@
                 window.location.href = 'dashboard.html'; 
             }
         };
-    </script>
-</body>
-</html>
+   
