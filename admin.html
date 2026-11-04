@@ -3,106 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin - Jastip Umma Shanum</title>
+    <title>Dashboard Admin - Jastip Umma Shanum</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .admin-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        h2 { color: #ff6b81; margin-bottom: 10px; text-align: center; }
-        p { font-size: 14px; color: #666; text-align: center; margin-bottom: 20px; }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; }
+        .admin-wrapper { display: flex; height: 100vh; }
+        .sidebar { width: 260px; background: #2f3542; color: white; padding: 20px; box-sizing: border-box; }
+        .sidebar h2 { color: #ff6b81; font-size: 20px; text-align: center; margin-bottom: 30px; }
+        .sidebar a { display: block; color: #a4b0be; text-decoration: none; padding: 12px 15px; border-radius: 8px; margin-bottom: 10px; font-size: 14px; transition: 0.3s; }
+        .sidebar a:hover, .sidebar a.active { background: #ff6b81; color: white; }
+        
+        .main-content { flex-grow: 1; padding: 30px; overflow-y: auto; background: #f4f7f6; }
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .card h3 { margin-top: 0; color: #333; font-size: 18px; border-bottom: 2px solid #f1f2f6; padding-bottom: 10px; }
+        
         .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; }
-        input[type="password"], input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        .btn {
-            width: 100%;
-            padding: 11px;
-            background-color: #ff6b81;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; color: #57606f; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 10px; border: 1px solid #dfe4ea; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        .btn { padding: 10px 20px; background-color: #ff6b81; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn:hover { background-color: #ff4757; }
-        .hidden { display: none; }
-        .back-link { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; font-size: 13px; }
-        .back-link:hover { color: #333; }
+        .hidden { display: none !important; }
+        
+        /* Login Box Styling */
+        #login-container { display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4f7f6; }
+        .login-box { background: white; padding: 35px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        .login-box h2 { color: #ff6b81; margin-bottom: 10px; }
+        .login-box p { font-size: 13px; color: #747d8c; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="admin-card">
-        <!-- PINTU 1: LOGIN ADMIN UTAMA -->
-        <div id="login-section">
+    <!-- HALAMAN LOGIN ADMIN (SEBELUM MASUK) -->
+    <div id="login-container">
+        <div class="login-box">
             <h2>🔐 Pintu 1: Admin Utama</h2>
-            <p>Masukkan Sandi Sakti untuk masuk ke Panel Kontrol.</p>
-            <div class="form-group">
+            <p>Masukkan Sandi Sakti pemilik platform.</p>
+            <div class="form-group" style="text-align: left;">
                 <label>Sandi Sakti:</label>
                 <input type="password" id="admin-pass" placeholder="Masukkan sandi...">
             </div>
-            <button onclick="cekSandiAdmin()" class="btn">Masuk Admin</button>
-            <a href="index.html" class="back-link">← Kembali ke Beranda</a>
+            <button onclick="cekSandiAdmin()" class="btn" style="width: 100%;">Masuk Panel Kontrol</button>
+            <a href="index.html" style="display: block; margin-top: 15px; color: #747d8c; text-decoration: none; font-size: 13px;">← Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <!-- DASHBOARD UTAMA ADMIN (MUNCUL SETELAH LOGIN SUKSES) -->
+    <div id="dashboard-container" class="admin-wrapper hidden">
+        <!-- Sidebar Navigasi -->
+        <div class="sidebar">
+            <h2>⚡ Jastip Admin</h2>
+            <a href="#" class="active">⚙️ Pengaturan Video</a>
+            <a href="index.html" onclick="logoutAdmin()" style="margin-top: 40px; background: #eb2f06; text-align: center;">🚪 Keluar Sistem</a>
         </div>
 
-        <!-- DASHBOARD ADMIN (SETELAH LOGIN BERHASIL) -->
-        <div id="dashboard-section" class="hidden">
-            <h2>⚙️ Dashboard Admin</h2>
-            <p>Kontrol Utama Platform Jastip Umma Shanum.</p>
-            
-            <div class="form-group">
-                <label>Ubah URL Video Sambutan (Splash Screen):</label>
-                <input type="text" id="video-url-input" placeholder="https://... (.mp4)">
+        <!-- Konten Dashboard -->
+        <div class="main-content">
+            <div class="card">
+                <h3>Pengaturan Video Sambutan (Splash Screen)</h3>
+                <p style="font-size: 13px; color: #747d8c;">Ubah URL file video sambutan yang akan tampil saat aplikasi pertama kali dibuka oleh pengguna.</p>
+                <div class="form-group">
+                    <label>URL Video (.mp4 / Link Cloud):</label>
+                    <input type="text" id="video-url-input" placeholder="https://contoh.com/video.mp4">
+                </div>
+                <button onclick="simpanVideo()" class="btn">Simpan Perubahan Video</button>
             </div>
-            <button onclick="simpanVideo()" class="btn">Simpan Video Baru</button>
 
-            <a href="index.html" class="back-link" onclick="logoutAdmin()">← Keluar / Kembali</a>
+            <div class="card">
+                <h3>Informasi Sistem Platform</h3>
+                <p style="font-size: 13px; color: #747d8c;">Status Sistem: <b style="color: #2ed573;">Aktif & Terhubung ke LocalStorage</b></p>
+                <p style="font-size: 13px; color: #747d8c;">Hak Akses: <b>Pintu 1 (Admin Utama - Kontrol Penuh)</b></p>
+                <p style="font-size: 13px; color: #747d8c;">Legalitas NIB OSS: <b>0311260134277</b></p>
+            </div>
         </div>
     </div>
 
     <script>
         window.onload = function() {
             if (localStorage.getItem('jastip_admin_logged') === 'true') {
-                tampilkanDashboard();
+                tampilkanDashboardAdmin();
             }
         };
 
         function cekSandiAdmin() {
             const inputSandi = document.getElementById('admin-pass').value;
-            // Sandi Sakti Admin Utama
             if (inputSandi === 'ROJAK121$') {
                 localStorage.setItem('jastip_admin_logged', 'true');
-                tampilkanDashboard();
+                tampilkanDashboardAdmin();
             } else {
-                alert('Sandi Sakti salah, Bro! Akses Admin ditolak.');
+                alert('Sandi Sakti salah, Bro! Akses ditolak.');
             }
         }
 
-        function tampilkanDashboard() {
-            document.getElementById('login-section').classList.add('hidden');
-            document.getElementById('dashboard-section').classList.remove('hidden');
+        function tampilkanDashboardAdmin() {
+            document.getElementById('login-container').classList.add('hidden');
+            document.getElementById('dashboard-container').classList.remove('hidden');
             
             const savedVideo = localStorage.getItem('jastip_custom_video');
             if (savedVideo) {
@@ -111,10 +104,10 @@
         }
 
         function simpanVideo() {
-            const urlBaru = document.getElementById('video-url-input').value;
+            const urlBaru = document.getElementById('video-url-input').value.trim();
             if (urlBaru) {
                 localStorage.setItem('jastip_custom_video', urlBaru);
-                alert('Berhasil, Bro! Video sambutan berhasil diperbarui.');
+                alert('Berhasil, Bro! Video sambutan berhasil diperbarui secara online.');
             } else {
                 alert('Tolong masukkan URL video yang valid.');
             }
