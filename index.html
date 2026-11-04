@@ -11,7 +11,8 @@
     <!-- Bagian Splash Screen & Video -->
     <div id="splash-screen" class="splash-screen">
         <video id="intro-video" autoplay muted playsinline>
-            <source src="https://drive.google.com/file/d/1_rQ5jNMJt_NGxx-lHnBc09cLYkpheGo6/view?usp=drivesdk" type="video/mp4">
+            <!-- Panggil langsung file mp4 yang sudah ada di folder/repository GitHub lu -->
+            <source src="jastip_intro.mp4.mp4" type="video/mp4">
             Browser tidak mendukung pemutaran video.
         </video>
 
@@ -39,7 +40,7 @@
                 authButtons.style.display = 'flex'; // Tampilkan tombol
             } else {
                 // KALO BUKAN PERTAMA KALI: Langsung lempar ke dashboard
-                window.location.href = 'dashboard.html'; // Ganti dengan halaman dashboard lu
+                window.location.href = 'dashboard.html'; 
             }
         };
     </script>
