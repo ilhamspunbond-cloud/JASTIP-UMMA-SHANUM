@@ -1,0 +1,8 @@
+body {
+    margin: 0;
+    padding: 0;
+    /* Masukin URL video lu di dalam tanda kurung url('') */
+    background-image: url('https://jumpshare.com/s/kGOBaWIuv4Hs3k3Tqbxw');
+    background-size: cover;
+    background-position: center;
+}
