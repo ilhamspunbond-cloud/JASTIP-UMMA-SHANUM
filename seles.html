@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Sales & Mitra - Jastip Umma Shanum</title>
+    <title>Portal Sales - Jastip Umma Shanum</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -66,7 +66,7 @@
             <button onclick="loginSalesUtama()" class="btn">Masuk sebagai Sales Utama</button>
         </div>
 
-        <div class="divider">ATAU DAFTAR / MASUK MITRA BARU</div>
+        <div class="divider">ATAU MITRA BARU</div>
 
         <!-- PINTU 3: SALES BARU / MITRA AFILIASI -->
         <div class="form-group">
@@ -82,11 +82,10 @@
         // Logika Pintu 2: Sales Utama
         function loginSalesUtama() {
             const sandi = document.getElementById('sales-utama-pass').value;
-            // Sandi khusus Sales Utama (bisa disesuaikan nanti)
             if (sandi === 'SALESUTAMA123') {
                 localStorage.setItem('jastip_role', 'sales_utama');
                 alert('Berhasil masuk melalui Pintu 2 (Sales Utama)!');
-                window.location.href = 'dashboard-sales.html'; // Nanti diarahkan ke dashboard sales
+                window.location.href = 'dashboard-sales.html';
             } else {
                 alert('Sandi Sales Utama salah, Bro!');
             }
@@ -96,11 +95,10 @@
         function loginSalesBaru() {
             const kode = document.getElementById('kode-sales-baru').value.trim();
             if (kode !== '') {
-                // Simpan kode sales baru ke penyimpanan lokal
                 localStorage.setItem('jastip_role', 'sales_baru');
                 localStorage.setItem('jastip_kode_referral', kode);
                 alert('Berhasil! Selamat bergabung sebagai Sales Baru dengan kode: ' + kode);
-                window.location.href = 'dashboard-sales.html'; // Diarahkan ke dashboard sales
+                window.location.href = 'dashboard-sales.html';
             } else {
                 alert('Tolong masukkan kode referral atau kode sales baru yang valid.');
             }
