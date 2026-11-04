@@ -1,12 +1,4 @@
-body {
-    margin: 0;
-    padding: 0;
-    /* Masukin URL video lu di dalam tanda kurung url('') */
-    background-image: url('https://jumpshare.com/s/kGOBaWIuv4Hs3k3Tqbxw');
-    background-size: cover;
-    background-position: center;
-}
-
+/* Pengaturan Dasar Halaman */
 body, html {
     margin: 0;
     padding: 0;
@@ -16,6 +8,7 @@ body, html {
     background-color: #000;
 }
 
+/* Container Splash Screen */
 .splash-screen {
     position: relative;
     width: 100vw;
@@ -25,13 +18,14 @@ body, html {
     align-items: center;
 }
 
+/* Pengaturan Tampilan Video Agar Pas di Layar HP/Monitor */
 .splash-screen video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Menyesuaikan layar HP/monitor */
+    object-fit: cover; /* Menyesuaikan layar tanpa gepeng */
     z-index: 1;
 }
 
@@ -70,7 +64,7 @@ body, html {
 }
 
 .btn-primary {
-    background-color: #ff6b81; /* Warna nuansa pink Jastip Umma Shanum */
+    background-color: #ff6b81; /* Nuansa pink Jastip Umma Shanum */
     color: white;
 }
 
