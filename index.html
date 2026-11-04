@@ -1,15 +1,47 @@
-<div class="splash-screen">
-    <video autoplay muted playsinline>
-        <!-- Masukin URL video lu di sini -->
-        <source src="https://jumpshare.com/s/kGOBaWIuv4Hs3k3Tqbxw" type="video/mp4">
-        Browsernya tidak mendukung pemutaran video.
-    </video>
-</div>
-
+<!DOCTYPE html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jastip Umma Shanum</title>
-    <!-- Panggil file CSS lu di sini -->
     <link rel="stylesheet" href="animasi_pembuka.css">
 </head>
+<body>
+
+    <!-- Bagian Splash Screen & Video -->
+    <div id="splash-screen" class="splash-screen">
+        <video id="intro-video" autoplay muted playsinline>
+            <source src="LINK_VIDEO_MP4_LU_DISINI" type="video/mp4">
+            Browser tidak mendukung pemutaran video.
+        </video>
+
+        <!-- Tombol Interaktif (Muncul khusus untuk pengguna pertama) -->
+        <div id="auth-buttons" class="auth-container" style="display: none;">
+            <h2>Selamat Datang di Jastip Umma Shanum</h2>
+            <a href="register.html" class="btn btn-primary">Lanjutkan (Daftar Akun)</a>
+            <a href="login.html" class="btn btn-secondary">Sudah Punya Akun (Masuk)</a>
+        </div>
+    </div>
+
+    <!-- Script JavaScript untuk Logika Pengguna Pertama / Lama -->
+    <script>
+        const video = document.getElementById('intro-video');
+        const splashScreen = document.getElementById('splash-screen');
+        const authButtons = document.getElementById('auth-buttons');
+
+        // Cek apakah pengguna sudah pernah buka aplikasi sebelumnya
+        const sudahPernahBuka = localStorage.getItem('jastip_sudah_buka');
+
+        video.onended = function() {
+            if (!sudahPernahBuka) {
+                // KALO PERTAMA KALI: Rekam status & tampilkan tombol daftar/masuk
+                localStorage.setItem('jastip_sudah_buka', 'true');
+                authButtons.style.display = 'flex'; // Tampilkan tombol
+            } else {
+                // KALO BUKAN PERTAMA KALI: Langsung lempar ke dashboard
+                window.location.href = 'dashboard.html'; // Ganti dengan halaman dashboard lu
+            }
+        };
+    </script>
+</body>
+</html>
