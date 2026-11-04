@@ -1,0 +1,24 @@
+<div class="admin-panel-card">
+    <h3>Pengaturan Video Sambutan (Splash Screen)</h3>
+    <p>Masukkan URL / Link video baru di bawah ini:</p>
+    
+    <!-- Input untuk URL Video -->
+    <input type="text" id="video-url-input" placeholder="Contoh: https://link-video-anda.mp4" class="admin-input">
+    
+    <!-- Tombol Simpan -->
+    <button onclick="simpanVideoBaru()" class="btn-admin-save">Simpan Perubahan Video</button>
+</div>
+
+<script>
+    // Fungsi untuk menyimpan URL video baru dari Admin
+    function simpanVideoBaru() {
+        const urlBaru = document.getElementById('video-url-input').value;
+        if (urlBaru) {
+            // Simpan link video ke penyimpanan browser
+            localStorage.setItem('jastip_custom_video', urlBaru);
+            alert('Berhasil! Video sambutan berhasil diperbarui.');
+        } else {
+            alert('Tolong masukkan URL video yang valid.');
+        }
+    }
+</script>
