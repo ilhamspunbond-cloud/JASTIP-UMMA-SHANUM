@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
-
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin - Jastip Umma Shanum</title>
@@ -58,22 +55,22 @@
 <body>
 
     <div class="admin-card">
-        <!-- TAHAP 1: FORM LOGIN SANDI SAKTI -->
+        <!-- PINTU 1: LOGIN ADMIN UTAMA -->
         <div id="login-section">
-            <h2>🔐 Akses Admin</h2>
-            <p>Masukkan Sandi Sakti pemilik platform untuk masuk.</p>
+            <h2>🔐 Pintu 1: Admin Utama</h2>
+            <p>Masukkan Sandi Sakti untuk masuk ke Panel Kontrol.</p>
             <div class="form-group">
                 <label>Sandi Sakti:</label>
                 <input type="password" id="admin-pass" placeholder="Masukkan sandi...">
             </div>
-            <button onclick="cekSandi()" class="btn">Masuk Panel</button>
+            <button onclick="cekSandiAdmin()" class="btn">Masuk Admin</button>
             <a href="index.html" class="back-link">← Kembali ke Beranda</a>
         </div>
 
-        <!-- TAHAP 2: DASHBOARD PENGATURAN (MUNCUL SETELAH SANDI BENAR) -->
+        <!-- DASHBOARD ADMIN (SETELAH LOGIN BERHASIL) -->
         <div id="dashboard-section" class="hidden">
             <h2>⚙️ Dashboard Admin</h2>
-            <p>Kelola pengaturan platform Jastip Umma Shanum.</p>
+            <p>Kontrol Utama Platform Jastip Umma Shanum.</p>
             
             <div class="form-group">
                 <label>Ubah URL Video Sambutan (Splash Screen):</label>
@@ -81,26 +78,25 @@
             </div>
             <button onclick="simpanVideo()" class="btn">Simpan Video Baru</button>
 
-            <a href="index.html" class="back-link">← Keluar / Kembali ke Beranda</a>
+            <a href="index.html" class="back-link" onclick="logoutAdmin()">← Keluar / Kembali</a>
         </div>
     </div>
 
     <script>
-        // Cek apakah admin sudah pernah login sebelumnya di browser ini
         window.onload = function() {
             if (localStorage.getItem('jastip_admin_logged') === 'true') {
                 tampilkanDashboard();
             }
         };
 
-        function cekSandi() {
+        function cekSandiAdmin() {
             const inputSandi = document.getElementById('admin-pass').value;
-            // Sandi Sakti yang ditentukan
+            // Sandi Sakti Admin Utama
             if (inputSandi === 'ROJAK121$') {
                 localStorage.setItem('jastip_admin_logged', 'true');
                 tampilkanDashboard();
             } else {
-                alert('Sandi Sakti salah, Bro! Akses ditolak.');
+                alert('Sandi Sakti salah, Bro! Akses Admin ditolak.');
             }
         }
 
@@ -108,7 +104,6 @@
             document.getElementById('login-section').classList.add('hidden');
             document.getElementById('dashboard-section').classList.remove('hidden');
             
-            // Ambil URL video yang sedang aktif (jika ada) dan tampilkan di input
             const savedVideo = localStorage.getItem('jastip_custom_video');
             if (savedVideo) {
                 document.getElementById('video-url-input').value = savedVideo;
@@ -124,15 +119,10 @@
                 alert('Tolong masukkan URL video yang valid.');
             }
         }
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jastip Umma Shanum</title>
-    
-    <!-- INI KODE UNTUK MEMANGGIL FILE CSS -->
-    <link rel="stylesheet" href="animasi_pembuka.css">
-</head>
 
+        function logoutAdmin() {
+            localStorage.removeItem('jastip_admin_logged');
+        }
     </script>
 </body>
 </html>
