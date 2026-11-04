@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk Akun - Jastip Umma Shanum</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .login-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { color: #ff6b81; margin-bottom: 5px; text-align: center; }
+        .subtitle { font-size: 12px; color: #666; text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; color: #333; }
+        input[type="tel"], select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        .btn { width: 100%; padding: 11px; background-color: #ff6b81; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 5px; }
+        .btn:hover { background-color: #ff4757; }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; font-size: 13px; }
+        .back-link:hover { color: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h2>🔐 Masuk Akun</h2>
+        <div class="subtitle">Jastip Umma Shanum</div>
+
+        <div class="form-group">
+            <label>Nomor WhatsApp Terdaftar:</label>
+            <input type="tel" id="login-wa" placeholder="Contoh: 081234567890">
+        </div>
+
+        <div class="form-group">
+            <label>Pilih Peran Akun:</label>
+            <select id="login-role">
+                <option value="pembeli">Pembeli / Customer</option>
+                <option value="penjual">Penjual / Mitra UMKM</option>
+            </select>
+        </div>
+
+        <button onclick="prosesLogin()" class="btn">Masuk Sekarang</button>
+
+        <a href="index.html" class="back-link">← Kembali ke Beranda Utama</a>
+    </div>
+
+    <script>
+        function prosesLogin() {
+            const wa = document.getElementById('login-wa').value.trim();
+            const role = document.getElementById('login-role').value;
+
+            if (!wa) {
+                alert('Tolong masukkan nomor WhatsApp lu, Bro!');
+                return;
+            }
+
+            // Simpan status login ke LocalStorage
+            localStorage.setItem('jastip_user_role', role);
+            localStorage.setItem('jastip_sudah_buka', 'true');
+
+            alert('Login Berhasil! Mengarahkan ke dashboard...');
+
+            // Arahkan ke dashboard sesuai peran
+            if (role === 'penjual') {
+                window.location.href = 'dashboard-penjual.html';
+            } else {
+                window.location.href = 'dashboard-pembeli.html';
+            }
+        }
+    </script>
+</body>
+</html>
