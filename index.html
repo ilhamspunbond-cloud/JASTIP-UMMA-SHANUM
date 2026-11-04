@@ -4,44 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jastip Umma Shanum</title>
-    <!-- Pemanggilan File CSS (Cukup 1 kali di sini) -->
+    <!-- Memanggil file CSS eksternal -->
     <link rel="stylesheet" href="animasi_pembuka.css">
 </head>
 <body>
 
-    <!-- Bagian Splash Screen & Video -->
+    <!-- Bagian Splash Screen & Video Sambutan -->
     <div id="splash-screen" class="splash-screen">
-        
-        <!-- Video Sambutan -->
         <video id="intro-video" autoplay muted playsinline>
-            <!-- Sumber video akan otomatis diisi dari pengaturan Admin jika sudah diubah -->
             <source id="video-source" src="jastip_intro.mp4.mp4" type="video/mp4">
             Browser tidak mendukung pemutaran video.
         </video>
 
-        <!-- Tombol Interaktif (Muncul khusus untuk pengguna pertama) -->
-        <div id="auth-buttons" class="auth-container" style="display: none;">
-            <h2>Selamat Datang di Jastip Umma Shanum</h2>
-            <a href="register.html" class="btn btn-primary">Lanjutkan (Daftar Akun)</a>
-            <a href="login.html" class="btn btn-secondary">Sudah Punya Akun (Masuk)</a>
+        <!-- Informasi Visi & Legalitas di Bawah Video -->
+        <div class="legal-banner" style="position: absolute; bottom: 20px; left: 0; width: 100%; text-align: center; color: white; padding: 0 15px; box-sizing: border-box; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
+            <p style="font-size: 12px; margin: 0;">Berkomitmen membantu mendigitalkan UMKM lokal & meningkatkan ekonomi masyarakat</p>
+            <p style="font-size: 10px; margin: 5px 0 0 0; opacity: 0.8;">NIB OSS: 0311260134277</p>
         </div>
 
-        <!-- Tombol Roda Gigi (Pintu Rahasia Menuju admin.html) - Posisi yang benar di dalam body -->
-        <a href="admin.html" class="secret-gear-btn" title="Admin Panel">⚙️</a>
+        <!-- Tombol Interaktif Pengguna Pertama -->
+        <div id="auth-buttons" class="auth-container" style="display: none;">
+            <h2>Selamat Datang di Jastip Umma Shanum</h2>
+            <p>Platform Jastip & Layanan Antar Terpercaya</p>
+            <a href="register.html" class="btn btn-primary">Daftar Akun Baru</a>
+            <a href="login.html" class="btn btn-secondary">Sudah Punya Akun (Masuk)</a>
+            <div style="margin-top: 15px;">
+                <a href="seles.html" class="btn" style="background-color: #2ed573; text-decoration: none; color: white; display: inline-block; padding: 10px 20px; border-radius: 8px; font-weight: bold;">Portal Sales & Mitra</a>
+            </div>
+        </div>
+
+        <!-- Tombol Roda Gigi (Pintu 1: Admin Utama) -->
+        <a href="admin.html" class="secret-gear-btn" title="Panel Admin Utama" style="position: absolute; bottom: 15px; right: 15px; font-size: 24px; text-decoration: none; z-index: 999;">⚙️</a>
     </div>
 
-    <!-- Script JavaScript untuk Cek Video Admin & Alur Pengguna -->
+    <!-- Script Logika Video & Alur Masuk -->
     <script>
-        // 1. CEK APAKAH ADMIN SUDAH MENGUBAH VIDEO LEWAT DASHBOARD ADMIN
+        // Cek apakah admin sudah mengatur video kustom
         const customVideoUrl = localStorage.getItem('jastip_custom_video');
         if (customVideoUrl) {
             const videoSource = document.getElementById('video-source');
             const videoElement = document.getElementById('intro-video');
             videoSource.src = customVideoUrl;
-            videoElement.load(); // Muat ulang video dengan link baru dari admin
+            videoElement.load();
         }
 
-        // 2. LOGIKA UTAMA: PENGGUNA PERTAMA VS PENGGUNA LAMA
         const video = document.getElementById('intro-video');
         const authButtons = document.getElementById('auth-buttons');
         const sudahPernahBuka = localStorage.getItem('jastip_sudah_buka');
@@ -55,7 +61,6 @@
             }
         };
 
-        // Jaga-jaga jika autoplay diblokir browser
         video.addEventListener('error', function() {
             if (!sudahPernahBuka) {
                 localStorage.setItem('jastip_sudah_buka', 'true');
