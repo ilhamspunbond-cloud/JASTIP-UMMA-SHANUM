@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Sales & Mitra - Jastip Umma Shanum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .sales-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 { color: #2ed573; margin-bottom: 10px; text-align: center; }
+        p { font-size: 14px; color: #666; text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .btn {
+            width: 100%;
+            padding: 11px;
+            background-color: #2ed573;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 5px;
+        }
+        .btn:hover { background-color: #26af5f; }
+        .divider { text-align: center; margin: 20px 0; color: #999; font-size: 12px; font-weight: bold; }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; font-size: 13px; }
+        .back-link:hover { color: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="sales-card">
+        <h2>🤝 Portal Sales & Mitra</h2>
+        <p>Pilih jalur akses sesuai peran lu di platform.</p>
+
+        <!-- PINTU 2: SALES UTAMA / RESMI -->
+        <div class="form-group">
+            <label>Pintu 2: Sandi Sales Utama / Resmi</label>
+            <input type="password" id="sales-utama-pass" placeholder="Masukkan sandi sales utama...">
+            <button onclick="loginSalesUtama()" class="btn">Masuk sebagai Sales Utama</button>
+        </div>
+
+        <div class="divider">ATAU DAFTAR / MASUK MITRA BARU</div>
+
+        <!-- PINTU 3: SALES BARU / MITRA AFILIASI -->
+        <div class="form-group">
+            <label>Pintu 3: Masukkan Kode Referral / Kode Sales Baru</label>
+            <input type="text" id="kode-sales-baru" placeholder="Contoh: SALESBARU2026">
+            <button onclick="loginSalesBaru()" class="btn" style="background-color: #ffa502;">Masuk sebagai Sales Baru</button>
+        </div>
+
+        <a href="index.html" class="back-link">← Kembali ke Beranda</a>
+    </div>
+
+    <script>
+        // Logika Pintu 2: Sales Utama
+        function loginSalesUtama() {
+            const sandi = document.getElementById('sales-utama-pass').value;
+            // Sandi khusus Sales Utama (bisa disesuaikan nanti)
+            if (sandi === 'SALESUTAMA123') {
+                localStorage.setItem('jastip_role', 'sales_utama');
+                alert('Berhasil masuk melalui Pintu 2 (Sales Utama)!');
+                window.location.href = 'dashboard-sales.html'; // Nanti diarahkan ke dashboard sales
+            } else {
+                alert('Sandi Sales Utama salah, Bro!');
+            }
+        }
+
+        // Logika Pintu 3: Sales Baru / Mitra dengan Kode Unik
+        function loginSalesBaru() {
+            const kode = document.getElementById('kode-sales-baru').value.trim();
+            if (kode !== '') {
+                // Simpan kode sales baru ke penyimpanan lokal
+                localStorage.setItem('jastip_role', 'sales_baru');
+                localStorage.setItem('jastip_kode_referral', kode);
+                alert('Berhasil! Selamat bergabung sebagai Sales Baru dengan kode: ' + kode);
+                window.location.href = 'dashboard-sales.html'; // Diarahkan ke dashboard sales
+            } else {
+                alert('Tolong masukkan kode referral atau kode sales baru yang valid.');
+            }
+        }
+    </script>
+</body>
+</html>
