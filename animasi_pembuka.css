@@ -1,43 +1,108 @@
+/* Reset Dasar */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+}
 
-/* Teks Visi & Legalitas di Bawah Video */
-.brand-info {
+/* Splash Screen & Video Fullscreen */
+.splash-screen {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#intro-video {
     position: absolute;
-    bottom: 20px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Agar video pas memenuhi layar tanpa gepeng */
+    z-index: 1;
+}
+
+/* Container Tombol Interaktif Setelah Video Selesai */
+.auth-container {
+    position: relative;
     z-index: 2;
-    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.75);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
     text-align: center;
-    padding: 0 20px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-    pointer-events: none; /* Biar tidak sengaja ke-klik */
+    max-width: 320px;
+    width: 90%;
+    backdrop-filter: blur(5px);
 }
 
-.brand-info p {
+.auth-container h2 {
+    color: #ffffff;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.auth-container p {
+    color: #dfe4ea;
     font-size: 13px;
-    margin: 0 0 5px 0;
-    font-weight: 500;
+    margin-bottom: 20px;
 }
 
-.brand-info small {
-    font-size: 10px;
-    opacity: 0.9;
-}
-
-/* Tombol Roda Gigi Rahasia di Pojok Bawah */
-.secret-gear-btn {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    z-index: 3;
-    font-size: 22px;
+/* Desain Tombol Utama */
+.btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
     text-decoration: none;
-    background: rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    transition: 0.3s;
+    display: inline-block;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #ff6b81;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #ff4757;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn-secondary:hover {
+    background-color: white;
+    color: #333;
+}
+
+/* Tombol Roda Gigi Rahasia (Pintu Admin) */
+.secret-gear-btn {
+    background: rgba(0, 0, 0, 0.4);
     padding: 8px;
     border-radius: 50%;
-    transition: 0.3s;
-    opacity: 0.6; /* Dibuat agak transparan agar tersembunyi */
+    transition: transform 0.3s ease;
 }
 
 .secret-gear-btn:hover {
-    opacity: 1;
-    transform: rotate(90deg); /* Efek putar dikit pas disentuh */
+    transform: rotate(90deg);
 }
