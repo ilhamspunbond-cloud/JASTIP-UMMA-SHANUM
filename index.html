@@ -1,64 +1,60 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jastip Umma Shanum</title>
-    <!-- Menghubungkan file CSS -->
     <link rel="stylesheet" href="animasi_pembuka.css">
 </head>
 <body>
 
-    <!-- Bagian Splash Screen & Video Pembuka -->
+    <!-- Bagian Splash Screen & Video -->
     <div id="splash-screen" class="splash-screen">
+        
+        <!-- PASANG KODE VIDEO BARU DI SINI (Gantikan yang lama) -->
         <video id="intro-video" autoplay muted playsinline>
-            <!-- Ganti 'jastip_intro.mp4.mp4' dengan nama file video lu yang ada di folder/GitHub -->
-            <source src="jastip_intro.mp4.mp4" type="video/mp4">
+            <!-- Sumber video akan otomatis diisi dari pengaturan Admin jika sudah diubah -->
+            <source id="video-source" src="jastip_intro.mp4.mp4" type="video/mp4">
             Browser tidak mendukung pemutaran video.
         </video>
 
-        <!-- Informasi Visi & Legalitas di Atas Layar (Opsional/Tampil Bersamaan) -->
-        <div class="brand-info">
-            <p>Berkomitmen membantu mendigitalkan UMKM lokal dan meningkatkan ekonomi masyarakat lokal</p>
-            <small>Jastip Umma Shanum | NIB Resmi OSS: 0311260134277</small>
-        </div>
-
-        <!-- Tombol Interaktif (Hanya muncul untuk pengguna baru setelah video selesai) -->
+        <!-- Tombol Interaktif (Muncul khusus untuk pengguna pertama) -->
         <div id="auth-buttons" class="auth-container" style="display: none;">
             <h2>Selamat Datang di Jastip Umma Shanum</h2>
             <a href="register.html" class="btn btn-primary">Lanjutkan (Daftar Akun)</a>
             <a href="login.html" class="btn btn-secondary">Sudah Punya Akun (Masuk)</a>
         </div>
 
-        <!-- Tombol Roda Gigi (Pintu Rahasia untuk Admin & Sales) -->
-        <a href="login-admin-sales.html" class="secret-gear-btn" title="Akses Khusus Admin & Sales">
-            ⚙️
-        </a>
+        <!-- Tombol Roda Gigi (Pintu Rahasia Menuju admin.html) -->
+        <a href="admin.html" class="secret-gear-btn" title="Admin Panel">⚙️</a>
     </div>
 
-    <!-- Script JavaScript untuk Logika Pengguna & Video -->
+    <!-- Script JavaScript untuk Cek Video Admin & Alur Pengguna -->
     <script>
-        const video = document.getElementById('intro-video');
-        const splashScreen = document.getElementById('splash-screen');
-        const authButtons = document.getElementById('auth-buttons');
+        // 1. CEK APAKAH ADMIN SUDAH MENGUBAH VIDEO LEWAT DASHBOARD ADMIN
+        const customVideoUrl = localStorage.getItem('jastip_custom_video');
+        if (customVideoUrl) {
+            const videoSource = document.getElementById('video-source');
+            const videoElement = document.getElementById('intro-video');
+            videoSource.src = customVideoUrl;
+            videoElement.load(); // Muat ulang video dengan link baru dari admin
+        }
 
-        // Cek apakah pengguna sudah pernah membuka aplikasi sebelumnya di perangkat ini
+        // 2. LOGIKA UTAMA: PENGGUNA PERTAMA VS PENGGUNA LAMA
+        const video = document.getElementById('intro-video');
+        const authButtons = document.getElementById('auth-buttons');
         const sudahPernahBuka = localStorage.getItem('jastip_sudah_buka');
 
-        // Logika ketika video sambutan selesai diputar
         video.onended = function() {
             if (!sudahPernahBuka) {
-                // KALO PERTAMA KALI: Simpan status, lalu tampilkan tombol daftar/masuk
                 localStorage.setItem('jastip_sudah_buka', 'true');
                 authButtons.style.display = 'flex'; 
             } else {
-                // KALO BUKAN PERTAMA KALI: Lewati splash screen, langsung lempar ke dashboard utama
                 window.location.href = 'dashboard.html'; 
             }
         };
 
-        // Jaga-jaga kalau video gagal autoplay atau user klik skip, video tetap mentok ke end
+        // Jaga-jaga jika autoplay diblokir browser
         video.addEventListener('error', function() {
             if (!sudahPernahBuka) {
                 localStorage.setItem('jastip_sudah_buka', 'true');
