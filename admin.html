@@ -1,24 +1,126 @@
-<div class="admin-panel-card">
-    <h3>Pengaturan Video Sambutan (Splash Screen)</h3>
-    <p>Masukkan URL / Link video baru di bawah ini:</p>
-    
-    <!-- Input untuk URL Video -->
-    <input type="text" id="video-url-input" placeholder="Contoh: https://link-video-anda.mp4" class="admin-input">
-    
-    <!-- Tombol Simpan -->
-    <button onclick="simpanVideoBaru()" class="btn-admin-save">Simpan Perubahan Video</button>
-</div>
-
-<script>
-    // Fungsi untuk menyimpan URL video baru dari Admin
-    function simpanVideoBaru() {
-        const urlBaru = document.getElementById('video-url-input').value;
-        if (urlBaru) {
-            // Simpan link video ke penyimpanan browser
-            localStorage.setItem('jastip_custom_video', urlBaru);
-            alert('Berhasil! Video sambutan berhasil diperbarui.');
-        } else {
-            alert('Tolong masukkan URL video yang valid.');
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - Jastip Umma Shanum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-    }
-</script>
+        .admin-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 { color: #ff6b81; margin-bottom: 10px; text-align: center; }
+        p { font-size: 14px; color: #666; text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; }
+        input[type="password"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .btn {
+            width: 100%;
+            padding: 11px;
+            background-color: #ff6b81;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover { background-color: #ff4757; }
+        .hidden { display: none; }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; font-size: 13px; }
+        .back-link:hover { color: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-card">
+        <!-- TAHAP 1: FORM LOGIN SANDI SAKTI -->
+        <div id="login-section">
+            <h2>🔐 Akses Admin</h2>
+            <p>Masukkan Sandi Sakti pemilik platform untuk masuk.</p>
+            <div class="form-group">
+                <label>Sandi Sakti:</label>
+                <input type="password" id="admin-pass" placeholder="Masukkan sandi...">
+            </div>
+            <button onclick="cekSandi()" class="btn">Masuk Panel</button>
+            <a href="index.html" class="back-link">← Kembali ke Beranda</a>
+        </div>
+
+        <!-- TAHAP 2: DASHBOARD PENGATURAN (MUNCUL SETELAH SANDI BENAR) -->
+        <div id="dashboard-section" class="hidden">
+            <h2>⚙️ Dashboard Admin</h2>
+            <p>Kelola pengaturan platform Jastip Umma Shanum.</p>
+            
+            <div class="form-group">
+                <label>Ubah URL Video Sambutan (Splash Screen):</label>
+                <input type="text" id="video-url-input" placeholder="https://... (.mp4)">
+            </div>
+            <button onclick="simpanVideo()" class="btn">Simpan Video Baru</button>
+
+            <a href="index.html" class="back-link">← Keluar / Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <script>
+        // Cek apakah admin sudah pernah login sebelumnya di browser ini
+        window.onload = function() {
+            if (localStorage.getItem('jastip_admin_logged') === 'true') {
+                tampilkanDashboard();
+            }
+        };
+
+        function cekSandi() {
+            const inputSandi = document.getElementById('admin-pass').value;
+            // Sandi Sakti yang ditentukan
+            if (inputSandi === 'ROJAK121$') {
+                localStorage.setItem('jastip_admin_logged', 'true');
+                tampilkanDashboard();
+            } else {
+                alert('Sandi Sakti salah, Bro! Akses ditolak.');
+            }
+        }
+
+        function tampilkanDashboard() {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            
+            // Ambil URL video yang sedang aktif (jika ada) dan tampilkan di input
+            const savedVideo = localStorage.getItem('jastip_custom_video');
+            if (savedVideo) {
+                document.getElementById('video-url-input').value = savedVideo;
+            }
+        }
+
+        function simpanVideo() {
+            const urlBaru = document.getElementById('video-url-input').value;
+            if (urlBaru) {
+                localStorage.setItem('jastip_custom_video', urlBaru);
+                alert('Berhasil, Bro! Video sambutan berhasil diperbarui.');
+            } else {
+                alert('Tolong masukkan URL video yang valid.');
+            }
+        }
+    </script>
+</body>
+</html>
