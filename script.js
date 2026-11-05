@@ -314,3 +314,66 @@ function addToCart(productId) {
     if(existing) {
         existing.qty += 1;
     } else {
+
+
+
+// ==========================================
+// MODUL TRANSAKSI & PANEL ADMIN JASTIP
+// ==========================================
+
+// Simulasi database transaksi lokal / cloud
+let transactionHistory = [
+    { id: "TRX-1001", buyer: "Siti Aminah", items: "Coklat Dubai (2x)", total: 300000, status: "Menunggu Konfirmasi", payment: "COD" },
+    { id: "TRX-1002", buyer: "Budi Santoso", items: "Tas Bangkok (1x)", total: 450000, status: "Lunas / Diproses", payment: "Transfer" }
+];
+
+// Render daftar transaksi ke dashboard Admin
+function renderAdminTransactions() {
+    const container = document.getElementById('admin-transaction-list');
+    if(!container) return;
+
+    container.innerHTML = '';
+    if(transactionHistory.length === 0) {
+        container.innerHTML = '<p class="text-xs text-slate-400 italic">Belum ada transaksi masuk.</p>';
+        return;
+    }
+
+    transactionHistory.forEach((trx) => {
+        let badgeColor = trx.status.includes('Lunas') ? 'bg-emerald-950 text-emerald-300 border-emerald-500/30' : 'bg-amber-950 text-amber-300 border-amber-500/30';
+        
+        container.innerHTML += `
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs space-y-2">
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-amber-400">${trx.id} - ${trx.buyer}</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full border ${badgeColor}">${trx.status}</span>
+                </div>
+                <div class="text-slate-300 text-[11px]">
+                    📦 Item: ${trx.items}<br>
+                    💰 Total: <b>Rp ${trx.total.toLocaleString('id-ID')}</b> (${trx.payment})
+                </div>
+                <div class="flex gap-2 pt-1">
+                    <button onclick="updateTransactionStatus('${trx.id}', 'Lunas / Diproses')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-2.5 py-1 rounded-lg text-[10px] transition cursor-pointer">✅ Set Lunas</button>
+                    <button onclick="deleteTransaction('${trx.id}')" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold px-2.5 py-1 rounded-lg text-[10px] transition cursor-pointer">🗑️ Hapus</button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// Ubah status transaksi
+function updateTransactionStatus(trxId, newStatus) {
+    const trx = transactionHistory.find(t => t.id === trxId);
+    if(trx) {
+        trx.status = newStatus;
+        renderAdminTransactions();
+        alert(`Status transaksi ${trxId} berhasil diperbarui menjadi: ${newStatus}`);
+    }
+}
+
+// Hapus transaksi
+function deleteTransaction(trxId) {
+    if(confirm(`Yakin ingin menghapus data transaksi ${trxId}?`)) {
+        transactionHistory = transactionHistory.filter(t => t.id !== trxId);
+        renderAdminTransactions();
+    }
+}
