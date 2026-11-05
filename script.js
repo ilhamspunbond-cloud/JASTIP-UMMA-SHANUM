@@ -235,3 +235,37 @@ function sendUserMessageToAi() {
     inputEl.value = '';
     chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+// ==========================================
+// VALIDASI PENDAFTARAN & LOCALSTORAGE
+// ==========================================
+
+function checkFirstTimeUser() {
+    const savedProfile = localStorage.getItem('jus_user_profile');
+    const onboardingModal = document.getElementById('onboarding-modal');
+    
+    if(!savedProfile) {
+        // Jika belum pernah daftar, tampilkan modal registrasi
+        if(onboardingModal) onboardingModal.classList.remove('hidden');
+    } else {
+        // Jika sudah, muat data profil
+        userProfile = JSON.parse(savedProfile);
+        updateHeaderUI();
+        renderDashboardByRole();
+    }
+}
+
+// Panggil fungsi ini di dalam window.onload utama
+window.addEventListener('DOMContentLoaded', () => {
+    // Sembunyikan splash screen setelah video/animasi selesai (2.5 detik)
+    setTimeout(() => {
+        const splash = document.getElementById('splash-screen');
+        if(splash) {
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.remove();
+                checkFirstTimeUser(); // Cek pendaftaran setelah splash selesai
+            }, 700);
+        }
+    }, 2500);
+});
