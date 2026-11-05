@@ -155,3 +155,60 @@ function adminManageProducts() {
 function adminViewAllTransactions() {
     alert("Memuat data rekapitulasi transaksi COD dan non-COD...");
 }
+
+
+// ==========================================
+// MODUL ASISTEN AI & ANALITIK BISNIS
+// ==========================================
+
+// Basis pengetahuan / ingatan AI lokal (bisa diperbarui oleh admin)
+let aiKnowledgeBase = [
+    { keyword: "jastip luar negeri", reaction: "Halo", answer: "Kami melayani titip beli barang luar negeri dan domestik dengan aman, cepat, dan terpercaya." },
+    { keyword: "komisi sales", reaction: "Baik", answer: "Setiap sales mendapatkan komisi langsung 30% serta bonus piramida 10% dari jaringan penjualan Anda." },
+    { keyword: "ongkir", reaction: "Tentu", answer: "Pengecekan ongkos kirim dapat dilakukan secara langsung menggunakan sistem Raja Ongkir yang tersedia di halaman utama." }
+];
+
+// Fungsi AI merespons pertanyaan pembeli/sales
+function askAiAssistant(userQuestion) {
+    const q = userQuestion.toLowerCase();
+    let found = aiKnowledgeBase.find(item => q.includes(item.keyword));
+
+    if (found) {
+        return `${found.reaction} ${userProfile.name}, ${found.answer}`;
+    } else {
+        // Jika AI tidak mengerti, catat ke unanswered logs (masuk ke dashboard admin)
+        logUnansweredQuestion(userQuestion);
+        return `Mohon maaf ${userProfile.name}, pertanyaan tersebut belum ada dalam ingatan sistem. Tim admin akan segera meninjaunya.`;
+    }
+}
+
+// Catat pertanyaan yang belum dimengerti AI
+function logUnansweredQuestion(questionText) {
+    let logs = JSON.parse(localStorage.getItem('jus_unanswered_logs') || '[]');
+    logs.push({ text: questionText, date: new Date().toLocaleString() });
+    localStorage.setItem('jus_unanswered_logs', JSON.stringify(logs));
+}
+
+// Analisis AI untuk memberikan saran peningkatan omzet (Khusus Admin)
+function getAiBusinessAdvice() {
+    // Simulasi analisis data omzet & transaksi
+    const totalTransactions = 45; // Contoh data rekap
+    const estimatedOmzet = 12500000;
+
+    let advice = `📊 **Analisis & Saran AI untuk Jastip Umma Shanum:**\n\n`;
+    advice += `- Total Transaksi Tercatat: ${totalTransactions} pesanan\n`;
+    advice += `- Perkiraan Omzet: Rp ${estimatedOmzet.toLocaleString('id-ID')}\n\n`;
+    advice += `💡 **Saran Peningkatan Income:**\n`;
+    advice += `1. Tingkatkan promosi produk jastip luar negeri yang memiliki margin keuntungan lebih tinggi.\n`;
+    advice += `2. Berikan insentif tambahan atau bonus target bagi jaringan Sales agar memperluas jangkauan pasar.\n`;
+    advice += `3. Maksimalkan fitur sistem COD untuk membangun kepercayaan pembeli baru di area domestik.`;
+
+    return advice;
+}
+
+// Fungsi Admin menambahkan ingatan baru ke AI
+function adminAddAiKnowledge(keyword, reaction, answer) {
+    aiKnowledgeBase.push({ keyword, reaction, answer });
+    localStorage.setItem('jus_ai_knowledge', JSON.stringify(aiKnowledgeBase));
+    alert("Ingatan AI baru berhasil disimpan dan langsung aktif!");
+}
