@@ -269,3 +269,48 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }, 2500);
 });
+
+
+// ==========================================
+// MODUL KATALOG PRODUK & KERANJANG JASTIP
+// ==========================================
+
+// Contoh data produk titipan (bisa diperbarui oleh admin atau database cloud)
+let jastipProducts = [
+    { id: 1, name: "Coklat Dubai Viral Premium", price: 150000, category: "Makanan", image: "https://via.placeholder.com/150" },
+    { id: 2, name: "Tas Brand Original Bangkok", price: 450000, category: "Fashion", image: "https://via.placeholder.com/150" },
+    { id: 3, name: "Skincare Import Exclusive", price: 275000, category: "Kecantikan", image: "https://via.placeholder.com/150" }
+];
+
+let shoppingCart = [];
+
+// Render daftar produk ke halaman utama
+function renderJastipCatalog() {
+    const catalogContainer = document.getElementById('jastip-catalog-container');
+    if(!catalogContainer) return;
+
+    catalogContainer.innerHTML = '';
+    jastipProducts.forEach(prod => {
+        catalogContainer.innerHTML += `
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-3 flex flex-col justify-between space-y-2">
+                <div>
+                    <img src="${prod.image}" class="w-full h-28 object-cover rounded-lg mb-2" alt="${prod.name}">
+                    <h3 class="font-bold text-xs text-amber-300 truncate">${prod.name}</h3>
+                    <p class="text-[10px] text-slate-400">Kategori: ${prod.category}</p>
+                    <p class="text-xs font-extrabold text-emerald-400 mt-1">Rp ${prod.price.toLocaleString('id-ID')}</p>
+                </div>
+                <button onclick="addToCart(${prod.id})" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-[11px] py-1.5 rounded-lg transition cursor-pointer">+ Tambah ke Keranjang</button>
+            </div>
+        `;
+    });
+}
+
+// Tambah produk ke keranjang
+function addToCart(productId) {
+    const item = jastipProducts.find(p => p.id === productId);
+    if(!item) return;
+
+    const existing = shoppingCart.find(c => c.id === productId);
+    if(existing) {
+        existing.qty += 1;
+    } else {
