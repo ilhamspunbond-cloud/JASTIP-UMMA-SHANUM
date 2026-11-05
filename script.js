@@ -212,3 +212,26 @@ function adminAddAiKnowledge(keyword, reaction, answer) {
     localStorage.setItem('jus_ai_knowledge', JSON.stringify(aiKnowledgeBase));
     alert("Ingatan AI baru berhasil disimpan dan langsung aktif!");
 }
+
+function sendUserMessageToAi() {
+    const inputEl = document.getElementById('ai-user-input');
+    const chatBox = document.getElementById('ai-chat-box');
+    const text = inputEl.value.trim();
+
+    if(!text) return;
+
+    // Tampilkan pesan user
+    chatBox.innerHTML += `<div class="text-right"><span class="bg-slate-800 text-white px-2.5 py-1 rounded-lg inline-block">${text}</span></div>`;
+    
+    // Dapatkan jawaban dari AI
+    const aiReply = askAiAssistant(text);
+
+    // Tampilkan jawaban AI
+    setTimeout(() => {
+        chatBox.innerHTML += `<div class="text-left"><span class="bg-emerald-950/80 text-emerald-200 border border-emerald-500/30 px-2.5 py-1 rounded-lg inline-block">${aiReply}</span></div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, 500);
+
+    inputEl.value = '';
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
