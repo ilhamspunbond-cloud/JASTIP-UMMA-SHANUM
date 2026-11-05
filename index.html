@@ -98,6 +98,19 @@
                 <p class="text-base font-extrabold text-blue-400">Aktif / Aman</p>
             </div>
         </section>
+
+<!-- Widget Asisten AI Interaktif -->
+<section class="bg-slate-800 border border-slate-700 rounded-2xl p-4 space-y-3 shadow-lg">
+    <h2 class="text-sm font-bold text-amber-300 flex items-center gap-1.5"><span>🤖</span> Tanya Asisten AI Jastip Umma Shanum</h2>
+    <div id="ai-chat-box" class="bg-slate-900 border border-slate-700 rounded-xl p-3 h-32 overflow-y-auto text-xs space-y-2 text-slate-300">
+        <div class="text-amber-400/90 italic">Halo! Saya asisten AI siap membantu menjawab pertanyaan Anda seputar jastip, ongkir, maupun sistem komisi.</div>
+    </div>
+    <div class="flex gap-2 text-xs">
+        <input type="text" id="ai-user-input" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-amber-400" placeholder="Ketik pertanyaan Anda...">
+        <button onclick="sendUserMessageToAi()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-4 py-2 rounded-xl transition cursor-pointer">Kirim</button>
+    </div>
+</section>
+
     </main>
 
     <!-- Script Utama -->
