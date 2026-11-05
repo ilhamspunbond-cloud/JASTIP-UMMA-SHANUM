@@ -83,3 +83,75 @@ function openSecretAdminPanel() {
         alert("Sandi salah atau akses ditolak.");
     }
 }
+
+// ==========================================
+// MODUL DASHBOARD MULTI-PERAN & KOMISI
+// ==========================================
+
+// Render tampilan berdasarkan role user yang sedang login
+function renderDashboardByRole() {
+    const mainContainer = document.querySelector('main');
+    if(!mainContainer) return;
+
+    let roleHTML = '';
+
+    if (userProfile.role === 'admin') {
+        // Tampilan khusus Admin / Owner (NIB: 0311260134277)
+        roleHTML = `
+            <div class="bg-slate-800 border border-amber-500/40 rounded-2xl p-5 space-y-4 shadow-xl">
+                <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+                    <h2 class="text-sm font-bold text-amber-400">👑 Panel Kontrol Admin & Owner</h2>
+                    <span class="text-[10px] bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-full font-semibold">NIB: 0311260134277</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <button onclick="adminManageProducts()" class="bg-slate-900 hover:bg-slate-950 p-3 rounded-xl border border-slate-700 text-left transition cursor-pointer">
+                        <div class="font-bold text-amber-300">📦 Kelola Produk Jastip</div>
+                        <div class="text-[10px] text-slate-400">Tambah, edit, atau hapus katalog barang titipan.</div>
+                    </button>
+                    <button onclick="adminViewAllTransactions()" class="bg-slate-900 hover:bg-slate-950 p-3 rounded-xl border border-slate-700 text-left transition cursor-pointer">
+                        <div class="font-bold text-amber-300">📊 Rekap Transaksi & COD</div>
+                        <div class="text-[10px] text-slate-400">Pantau seluruh status pesanan pembeli & sales.</div>
+                    </button>
+                </div>
+            </div>
+        `;
+    } else if (userProfile.role === 'sales') {
+        // Tampilan khusus Sales / Mitra (Komisi 30% & 10%)
+        roleHTML = `
+            <div class="bg-slate-800 border border-emerald-500/40 rounded-2xl p-5 space-y-4 shadow-xl">
+                <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+                    <h2 class="text-sm font-bold text-emerald-400">💼 Dashboard Sales & Mitra</h2>
+                    <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2.5 py-1 rounded-full font-semibold">Aktif</span>
+                </div>
+                <p class="text-xs text-slate-300">Bagikan link referral Anda untuk mendapatkan komisi langsung 30% dan bonus piramida 10% dari jaringan penjualan.</p>
+                <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center justify-between text-xs">
+                    <span class="text-slate-400 truncate">Link: https://jastip-umma.app/ref/${userProfile.name.toLowerCase().replace(/\s+/g, '')}</span>
+                    <button onclick="copySalesLink()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg transition cursor-pointer flex-shrink-0">Salin Link</button>
+                </div>
+            </div>
+        `;
+    } else {
+        // Tampilan Pembeli (Buyer) / Penjual (Seller)
+        roleHTML = `
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 space-y-3">
+                <h2 class="text-sm font-bold text-amber-300">🛒 Katalog Jastip Pilihan</h2>
+                <p class="text-xs text-slate-400">Silakan pilih produk titipan luar negeri atau domestik favorit Anda, cek ongkir via Raja Ongkir, dan selesaikan transaksi dengan aman.</p>
+            </div>
+        `;
+    }
+
+    // Sisipkan ke dalam container utama web
+    mainContainer.insertAdjacentHTML('afterbegin', roleHTML);
+}
+
+function copySalesLink() {
+    alert("Link referral berhasil disalin ke clipboard! Bagikan ke calon pembeli.");
+}
+
+function adminManageProducts() {
+    alert("Membuka form manajemen produk admin...");
+}
+
+function adminViewAllTransactions() {
+    alert("Memuat data rekapitulasi transaksi COD dan non-COD...");
+}
