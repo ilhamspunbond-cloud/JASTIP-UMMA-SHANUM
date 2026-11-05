@@ -143,6 +143,34 @@
 </section>
 
 
+<!-- Bagian Cek Ongkir Raja Ongkir -->
+<section class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 space-y-3 shadow-xl">
+    <h2 class="text-sm font-bold text-amber-300 flex items-center gap-1.5"><span>🚚</span> Cek Ongkir Otomatis (Raja Ongkir)</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+        <div>
+            <label class="block text-slate-400 mb-1">ID / Kota Tujuan:</label>
+            <input type="text" id="dest-city-id" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-amber-400" placeholder="Contoh: 151 (Jakarta Barat)">
+        </div>
+        <div>
+            <label class="block text-slate-400 mb-1">Berat Barang (gram):</label>
+            <input type="number" id="package-weight" value="1000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-amber-400">
+        </div>
+        <div>
+            <label class="block text-slate-400 mb-1">Pilih Kurir:</label>
+            <select id="courier-code" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-amber-400">
+                <option value="jne">JNE</option>
+                <option value="jnt">J&T Express</option>
+                <option value="sicepat">SiCepat</option>
+            </select>
+        </div>
+    </div>
+    <button onclick="triggerRajaOngkirCheck()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2 rounded-xl transition cursor-pointer">Cek Tarif Sekarang</button>
+    
+    <div id="tariff-result" class="text-xs text-slate-300 mt-2">
+        <!-- Hasil tarif muncul di sini -->
+    </div>
+</section>
+
 
     </main>
 
@@ -150,3 +178,5 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
