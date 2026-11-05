@@ -3,72 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jastip Umma Shanum</title>
-    <!-- Memanggil file CSS eksternal -->
+    <title>JASTIP UMMA SHANUM Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="animasi_pembuka.css">
 </head>
-<body>
+<body class="bg-slate-900 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
 
-    <!-- Bagian Splash Screen & Video Sambutan -->
-    <div id="splash-screen" class="splash-screen">
-        <video id="intro-video" autoplay muted playsinline>
-            <source id="video-source" src="https://drive.google.com/file/d/1_rQ5jNMJt_NGxx-lHnBc09cLYkpheGo6/view?usp=drivesdk" type="video/mp4">
-            Browser tidak mendukung pemutaran video.
+    <!-- SPLASH SCREEN / INTRO PEMBUKA -->
+    <div id="splash-screen" class="fixed inset-0 z-50 bg-slate-950 flex flex-col items-center justify-center transition-opacity duration-700">
+        <video id="intro-video" autoplay muted playsinline class="w-72 h-72 object-contain rounded-2xl shadow-2xl mb-4">
+            <source src="jastip_intro.mp4.mp4" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
-
-        <!-- Informasi Visi & Legalitas di Bawah Video -->
-        <div class="legal-banner" style="position: absolute; bottom: 20px; left: 0; width: 100%; text-align: center; color: white; padding: 0 15px; box-sizing: border-box; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
-            <p style="font-size: 12px; margin: 0;">Berkomitmen membantu mendigitalkan UMKM lokal & meningkatkan ekonomi masyarakat</p>
-            <p style="font-size: 10px; margin: 5px 0 0 0; opacity: 0.8;">NIB OSS: 0311260134277</p>
-        </div>
-
-        <!-- Tombol Interaktif Pengguna Pertama -->
-        <div id="auth-buttons" class="auth-container" style="display: none;">
-            <h2>Selamat Datang di Jastip Umma Shanum</h2>
-            <p>Platform Jastip & Layanan Antar Terpercaya</p>
-            <a href="register.html" class="btn btn-primary">Daftar Akun Baru</a>
-            <a href="login.html" class="btn btn-secondary">Sudah Punya Akun (Masuk)</a>
-            <div style="margin-top: 15px;">
-                <a href="seles.html" class="btn" style="background-color: #2ed573; text-decoration: none; color: white; display: inline-block; padding: 10px 20px; border-radius: 8px; font-weight: bold;">Portal Sales & Mitra</a>
-            </div>
-        </div>
-
-        <!-- Tombol Roda Gigi (Pintu 1: Admin Utama) -->
-        <a href="admin.html" class="secret-gear-btn" title="Panel Admin Utama" style="position: absolute; bottom: 15px; right: 15px; font-size: 24px; text-decoration: none; z-index: 999;">⚙️</a>
+        <h1 class="text-2xl font-extrabold text-amber-400 tracking-wider">JASTIP UMMA SHANUM</h1>
+        <p class="text-xs text-slate-400 mt-1">NIB: 0311260134277</p>
     </div>
 
-    <!-- Script Logika Video & Alur Masuk -->
-    <script>
-        // Cek apakah admin sudah mengatur video kustom
-        const customVideoUrl = localStorage.getItem('jastip_custom_video');
-        if (customVideoUrl) {
-            const videoSource = document.getElementById('video-source');
-            const videoElement = document.getElementById('intro-video');
-            videoSource.src = customVideoUrl;
-            videoElement.load();
-        }
+    <!-- ONBOARDING & REGISTRATION MODAL (FIRST TIME USER) -->
+    <div id="onboarding-modal" class="fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4">
+            <h2 class="text-lg font-bold text-amber-300">Selamat Datang di Jastip Umma Shanum</h2>
+            <p class="text-xs text-slate-400">Silakan lengkapi data diri Anda untuk mulai menggunakan platform.</p>
+            
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-300 mb-1">Nama Lengkap:</label>
+                    <input type="text" id="reg-name" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-amber-400" placeholder="Masukkan nama Anda">
+                </div>
+                <div>
+                    <label class="block text-slate-300 mb-1">Nomor WhatsApp:</label>
+                    <input type="text" id="reg-wa" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-amber-400" placeholder="08xxxxxxxxxx">
+                </div>
+                <div>
+                    <label class="block text-slate-300 mb-1">Pilih Peran (Role):</label>
+                    <select id="reg-role" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-amber-400">
+                        <option value="buyer">Pembeli (Buyer)</option>
+                        <option value="seller">Penjual (Seller)</option>
+                        <option value="sales">Sales / Mitra</option>
+                        <option value="admin">Admin / Owner</option>
+                    </select>
+                </div>
+                <button type="button" onclick="submitRegistration()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2.5 rounded-xl transition cursor-pointer">Simpan & Masuk Aplikasi</button>
+            </div>
+        </div>
+    </div>
 
-        const video = document.getElementById('intro-video');
-        const authButtons = document.getElementById('auth-buttons');
-        const sudahPernahBuka = localStorage.getItem('jastip_sudah_buka');
+    <!-- MAIN DASHBOARD CONTAINER -->
+    <header class="bg-slate-900 border-b border-slate-800 px-4 py-3 flex justify-between items-center sticky top-0 z-30">
+        <div class="flex items-center gap-2">
+            <span class="text-xl">🛍️</span>
+            <div>
+                <h1 class="text-sm font-bold text-amber-400">JASTIP UMMA SHANUM</h1>
+                <p id="user-display-info" class="text-[10px] text-slate-400">Memuat profil...</p>
+            </div>
+        </div>
+        <button onclick="openSecretAdminPanel()" class="text-slate-600 hover:text-amber-400 transition text-sm p-2 cursor-pointer" title="Secret Gear">⚙️</button>
+    </header>
 
-        video.onended = function() {
-            if (!sudahPernahBuka) {
-                localStorage.setItem('jastip_sudah_buka', 'true');
-                authButtons.style.display = 'flex'; 
-            } else {
-                window.location.href = 'dashboard.html'; 
-            }
-        };
+    <main class="flex-1 p-4 max-w-4xl mx-auto w-full space-y-6">
+        <!-- Fitur Raja Ongkir & Cek Tarif -->
+        <section class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-4 space-y-3">
+            <h2 class="text-sm font-bold text-amber-300 flex items-center gap-1.5"><span>🚚</span> Cek Ongkir & Pengiriman (Raja Ongkir)</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">Kota Tujuan:</label>
+                    <input type="text" id="destination-city" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none" placeholder="Contoh: Tangerang / Jakarta">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">Kurir Ekspedisi:</label>
+                    <select id="courier-service" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none">
+                        <option value="jne">JNE</option>
+                        <option value="jnt">J&T Express</option>
+                        <option value="sicepat">SiCepat</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="checkRajaOngkirTariff()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition cursor-pointer">Cek Tarif Sekarang</button>
+            <div id="tariff-result" class="text-xs text-slate-300 mt-2"></div>
+        </section>
 
-        video.addEventListener('error', function() {
-            if (!sudahPernahBuka) {
-                localStorage.setItem('jastip_sudah_buka', 'true');
-                authButtons.style.display = 'flex';
-            } else {
-                window.location.href = 'dashboard.html';
-            }
-        });
-    </script>
+        <!-- Sistem Komisi & Dashboard Informasi -->
+        <section class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div class="bg-slate-800 border border-slate-700 p-4 rounded-xl space-y-1">
+                <span class="text-slate-400">Komisi Langsung (30%)</span>
+                <p id="stat-commission-direct" class="text-base font-extrabold text-emerald-400">Rp 0</p>
+            </div>
+            <div class="bg-slate-800 border border-slate-700 p-4 rounded-xl space-y-1">
+                <span class="text-slate-400">Bonus Pyramida (10%)</span>
+                <p id="stat-commission-pyramid" class="text-base font-extrabold text-amber-400">Rp 0</p>
+            </div>
+            <div class="bg-slate-800 border border-slate-700 p-4 rounded-xl space-y-1">
+                <span class="text-slate-400">Status Transaksi COD</span>
+                <p class="text-base font-extrabold text-blue-400">Aktif / Aman</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Script Utama -->
+    <script src="script.js"></script>
 </body>
 </html>
