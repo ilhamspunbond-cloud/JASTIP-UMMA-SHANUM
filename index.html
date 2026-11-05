@@ -129,6 +129,20 @@
     </button>
 </section>
 
+<!-- Bagian Panel Kontrol Transaksi Admin -->
+<section id="admin-panel-section" class="bg-slate-800/80 border border-amber-500/30 rounded-2xl p-4 space-y-3 shadow-xl">
+    <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+        <h2 class="text-sm font-bold text-amber-400 flex items-center gap-1.5"><span>📊</span> Kelola Transaksi Masuk & COD</h2>
+        <button onclick="renderAdminTransactions()" class="bg-slate-900 border border-slate-700 text-slate-300 text-[10px] px-2.5 py-1 rounded-lg hover:text-white transition cursor-pointer">🔄 Muat Ulang</button>
+    </div>
+    
+    <!-- Container Daftar Transaksi -->
+    <div id="admin-transaction-list" class="space-y-2 max-h-60 overflow-y-auto">
+        <!-- Render otomatis via JavaScript -->
+    </div>
+</section>
+
+
 
     </main>
 
