@@ -1,108 +1,13 @@
-/* Reset Dasar */
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    background-color: #000;
+/* Animasi Pembuka Jastip Umma Shanum */
+body {
+    background-color: #0f172a;
+    color: #f1f5f9;
 }
 
-/* Splash Screen & Video Fullscreen */
-.splash-screen {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#splash-screen {
+    transition: opacity 0.7s ease-in-out;
 }
 
-#intro-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Agar video pas memenuhi layar tanpa gepeng */
-    z-index: 1;
-}
-
-/* Container Tombol Interaktif Setelah Video Selesai */
-.auth-container {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.75);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-    text-align: center;
-    max-width: 320px;
-    width: 90%;
-    backdrop-filter: blur(5px);
-}
-
-.auth-container h2 {
-    color: #ffffff;
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-.auth-container p {
-    color: #dfe4ea;
-    font-size: 13px;
-    margin-bottom: 20px;
-}
-
-/* Desain Tombol Utama */
-.btn {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-    text-decoration: none;
-    box-sizing: border-box;
-    transition: 0.3s;
-    display: inline-block;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.btn-primary {
-    background-color: #ff6b81;
-    color: white;
-    border: none;
-}
-
-.btn-primary:hover {
-    background-color: #ff4757;
-}
-
-.btn-secondary {
-    background-color: transparent;
-    color: white;
-    border: 2px solid white;
-}
-
-.btn-secondary:hover {
-    background-color: white;
-    color: #333;
-}
-
-/* Tombol Roda Gigi Rahasia (Pintu Admin) */
-.secret-gear-btn {
-    background: rgba(0, 0, 0, 0.4);
-    padding: 8px;
-    border-radius: 50%;
-    transition: transform 0.3s ease;
-}
-
-.secret-gear-btn:hover {
-    transform: rotate(90deg);
+input, select {
+    caret-color: #fbbf24;
 }
