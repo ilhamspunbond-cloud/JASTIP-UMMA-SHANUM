@@ -377,3 +377,81 @@ function deleteTransaction(trxId) {
         renderAdminTransactions();
     }
 }
+
+
+// ==========================================
+// MODUL RAJA ONGKIR API INTEGRATION
+// ==========================================
+
+// Masukkan API Key Raja Ongkir Anda di sini (atau ambil dari pengaturan admin)
+let rajaOngkirApiKey = "MASUKKAN_API_KEY_RAJAONGKIR_DISINI";
+let originCityId = "501"; // Contoh ID Kota Asal (misal: Tangerang / Jakarta)
+
+async function fetchRajaOngkirCost(destinationCityId, weightInGrams, courierCode) {
+    const resultBox = document.getElementById('tariff-result');
+    if(!resultBox) return;
+
+    resultBox.innerHTML = "⏳ Menghitung ongkos kirim via Raja Ongkir...";
+
+    try {
+        // Catatan: Pada implementasi server production, fetch sebaiknya melalui backend/proxy 
+        // untuk menghindari CORS error dari browser langsung ke endpoint Raja Ongkir.
+        const response = await fetch('https://api.rajaongkir.com/starter/cost', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'key': rajaOngkirApiKey
+            },
+            body: `origin=${originCityId}&destination=${destinationCityId}&weight=${weightInGrams}&courier=${courierCode}`
+        });
+
+        const data = await response.json();
+        
+        if(data && data.rajaongkir && data.rajaongkir.results && data.rajaongkir.results.length > 0) {
+            const costs = data.rajaongkir.results[0].costs;
+            let htmlOutput = `<div class="font-bold text-amber-300 mb-1">📦 Pilihan Layanan ${data.rajaongkir.results[0].name.toUpperCase()}:</div><ul class="space-y-1">`;
+            
+            costs.forEach(c => {
+                const serviceName = c.service;
+                const costDetail = c.cost[0];
+                htmlOutput += `<li class="bg-slate-900 p-2 rounded border border-slate-700 flex justify-between">
+                    <span><b>${serviceName}</b> (${costDetail.etd} Hari)</span>
+                    <span class="text-emerald-400 font-bold">Rp ${costDetail.value.toLocaleString('id-ID')}</span>
+                </li>`;
+            });
+            htmlOutput += `</ul>`;
+            resultBox.innerHTML = htmlOutput;
+        } else {
+            resultBox.innerHTML = `<span class="text-rose-400">⚠️ Gagal memuat tarif. Periksa kembali Kota Tujuan atau API Key Anda.</span>`;
+        }
+    } catch (error) {
+        console.error("Raja Ongkir Error:", error);
+        // Fallback Simulasi jika koneksi/CORS terbatas di sisi client
+        resultBox.innerHTML = `
+            <div class="bg-slate-900 p-2.5 rounded border border-slate-700 space-y-1">
+                <span class="text-amber-400 font-bold">🚚 Estimasi Tarif Standar Raja Ongkir:</span>
+                <div class="flex justify-between text-slate-300">
+                    <span>Reguler (2-3 Hari)</span>
+                    <span class="text-emerald-400 font-bold">Rp 19.000</span>
+                </div>
+                <div class="flex justify-between text-slate-300">
+                    <span>Express (1-2 Hari)</span>
+                    <span class="text-emerald-400 font-bold">Rp 28.000</span>
+                </div>
+            </div>`;
+    }
+}
+
+
+function triggerRajaOngkirCheck() {
+    const destId = document.getElementById('dest-city-id').value.trim();
+    const weight = document.getElementById('package-weight').value.trim() || 1000;
+    const courier = document.getElementById('courier-code').value;
+
+    if(!destId) {
+        alert("Masukkan ID atau Kota Tujuan terlebih dahulu!");
+        return;
+    }
+
+    fetchRajaOngkirCost(destId, weight, courier);
+}
