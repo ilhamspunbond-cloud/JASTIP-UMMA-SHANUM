@@ -172,11 +172,117 @@
 </section>
 
 
+    <<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jastip Umma Shanum Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Animation Stylesheet -->
+    <link rel="stylesheet" href="animasi_pembuka.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- 1. SPLASH SCREEN / INTRO PEMBUKA -->
+    <div id="splash-screen" class="fixed inset-0 z-50 bg-slate-950 flex flex-col items-center justify-center transition-opacity duration-700">
+        <video id="intro-video" autoplay muted playsinline class="w-72 h-72 object-contain rounded-2xl shadow-2xl mb-4">
+            <source src="jastip_intro.mp4.mp4" type="video/mp4">
+            Browser Anda tidak mendukung tag video.
+        </video>
+        <h1 class="text-2xl font-extrabold text-amber-400 tracking-wider">JASTIP UMMA SHANUM</h1>
+        <p class="text-xs text-slate-400 mt-1">NIB: 0311260134277</p>
+    </div>
+
+    <!-- 2. ONBOARDING & REGISTRATION MODAL (PERTAMA KALI KUNJUNGAN) -->
+    <div id="onboarding-modal" class="fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4">
+            <h2 class="text-lg font-bold text-amber-300">Selamat Datang di Jastip Umma Shanum</h2>
+            <p class="text-xs text-slate-400">Silakan lengkapi data diri Anda untuk mulai menggunakan platform.</p>
+            
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-300 mb-1">Nama Lengkap:</label>
+                    <input type="text" id="reg-name" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-amber-400" placeholder="Masukkan nama Anda">
+                </div>
+                <div>
+                    <label class="block text-slate-300 mb-1">Nomor WhatsApp:</label>
+                    <input type="text" id="reg-wa" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-amber-400" placeholder="08xxxxxxxxxx">
+                </div>
+                <div>
+                    <label class="block text-slate-300 mb-1">Pilih Peran (Role):</label>
+                    <select id="reg-role" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-amber-400">
+                        <option value="buyer">Pembeli (Buyer)</option>
+                        <option value="seller">Penjual (Seller)</option>
+                        <option value="sales">Sales / Mitra</option>
+                        <option value="admin">Admin / Owner</option>
+                    </select>
+                </div>
+                <button type="button" onclick="submitRegistration()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2.5 rounded-xl transition cursor-pointer">Simpan & Masuk Aplikasi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. HEADER UTAMA APLIKASI -->
+    <header class="bg-slate-900 border-b border-slate-800 px-4 py-3 flex justify-between items-center sticky top-0 z-30">
+        <div class="flex items-center gap-2">
+            <span class="text-xl">🛍️</span>
+            <div>
+                <h1 class="text-sm font-bold text-amber-400">JASTIP UMMA SHANUM</h1>
+                <p id="user-display-info" class="text-[10px] text-slate-400">Memuat profil...</p>
+            </div>
+        </div>
+        <button onclick="openSecretAdminPanel()" class="text-slate-600 hover:text-amber-400 transition text-sm p-2 cursor-pointer" title="Secret Gear">⚙️</button>
+    </header>
+
+    <!-- 4. KONTEN UTAMA -->
+    <main class="flex-1 p-4 max-w-4xl mx-auto w-full space-y-6">
+        
+        <!-- Container Khusus Role (Admin / Sales) -->
+        <div id="dynamic-role-container"></div>
+
+        <!-- Katalog Produk Jastip -->
+        <section class="space-y-3">
+            <div class="flex justify-between items-center">
+                <h2 class="text-sm font-bold text-amber-300">📦 Katalog Titipan Tersedia</h2>
+                <span class="text-xs bg-slate-800 border border-slate-700 px-3 py-1 rounded-xl">Keranjang: <b id="cart-item-count" class="text-amber-400">0</b> Item</span>
+            </div>
+            
+            <div id="jastip-catalog-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <!-- Render produk otomatis via script.js -->
+            </div>
+
+            <button onclick="checkoutToWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition cursor-pointer text-xs flex items-center justify-center gap-2">
+                <span>🛒</span> Checkout Pesanan via WhatsApp
+            </button>
+        </section>
+
+        <!-- Modul Cek Ongkir Raja Ongkir -->
+        <section class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 space-y-3 shadow-xl">
+            <h2 class="text-sm font-bold text-amber-300 flex items-center gap-1.5"><span>🚚</span> Cek Ongkir Otomatis (Raja Ongkir)</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">Kota / Tujuan Pengiriman:</label>
+                    <input type="text" id="dest-city-id" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-amber-400" placeholder="Contoh: Tangerang / Jakarta">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">Pilih Kurir:</label>
+                    <select id="courier-code" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-amber-400">
+                        <option value="jne">JNE</option>
+                        <option value="jnt">J&T Express</option>
+                        <option value="sicepat">SiCepat</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="triggerRajaOngkirCheck()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2 rounded-xl transition cursor-pointer">Cek Tarif Sekarang</button>
+            <div id="tariff-result" class="text-xs text-slate-300 mt-2"></div>
+        </section>
+
     </main>
 
-    <!-- Script Utama -->
+    <!-- Hubungkan Script Utama -->
     <script src="script.js"></script>
 </body>
 </html>
-
 
