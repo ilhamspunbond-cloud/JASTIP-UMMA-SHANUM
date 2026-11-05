@@ -111,6 +111,25 @@
     </div>
 </section>
 
+<!-- Bagian Katalog Produk Jastip -->
+<section class="space-y-3">
+    <div class="flex justify-between items-center">
+        <h2 class="text-sm font-bold text-amber-300">📦 Katalog Titipan Tersedia</h2>
+        <span class="text-xs bg-slate-800 border border-slate-700 px-3 py-1 rounded-xl">Keranjang: <b id="cart-item-count" class="text-amber-400">0</b> Item</span>
+    </div>
+    
+    <!-- Grid Produk -->
+    <div id="jastip-catalog-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <!-- Render otomatis via JavaScript -->
+    </div>
+
+    <!-- Tombol Checkout -->
+    <button onclick="checkoutToWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition cursor-pointer text-xs flex items-center justify-center gap-2">
+        <span>🛒</span> Checkout Pesanan via WhatsApp
+    </button>
+</section>
+
+
     </main>
 
     <!-- Script Utama -->
